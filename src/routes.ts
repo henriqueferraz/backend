@@ -6,5 +6,5 @@ export const router = Router();
 router.get('/ping', pingController.ping);
 
 router.get('/teste', (req: Request, res: Response) => {
-    res.json({ ok: true })
+    throw new Error('Erro ao fazer a requisição!')
 });
