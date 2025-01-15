@@ -1,3 +1,4 @@
+import { prisma } from "../../lib/prisma"
 
 interface ProductRequest {
     name: string,
@@ -9,6 +10,19 @@ interface ProductRequest {
 
 export class CreateProductService {
     async execute({ name, banner, category_id, description, price }: ProductRequest) {
-        return { ok: true }
+
+        const product = await prisma.product.create({
+            data: {
+                name,
+                banner,
+                category_id,
+                description,
+                price,
+            }
+
+        });
+
+
+        return product;
     }
 };

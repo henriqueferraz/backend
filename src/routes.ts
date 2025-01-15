@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import multer from "multer";
 
 import * as pingController from "./controllers/ping";
 import * as userController from "./controllers/createUser";
@@ -15,7 +16,13 @@ import { CreateCategoryController } from "./controllers/category/CreateCategoryC
 import { ListCategoryController } from "./controllers/category/ListCategoryController";
 import { CreateProductController } from "./controllers/product/CreateProductController";
 
+//---- MULTER
+import uploadConfig from "./config/multer";
+import { ListByCategoryController } from "./controllers/product/ListByCategoryController";
+
 export const router = Router();
+
+const upload = multer(uploadConfig.upload("./public"));
 
 /*
 //---- ROTAS DE TESTE ----//
@@ -41,7 +48,8 @@ router.post('/category', isAuthenticated as any, new CreateCategoryController().
 router.get('/category', isAuthenticated as any, new ListCategoryController().handle);
 
 //---- ROTAS PRODUCT ----//
-router.post('/product', isAuthenticated as any, new CreateProductController().handle);
+router.post('/product', isAuthenticated as any, upload.single('file'), new CreateProductController().handle);
+router.get('/category/product', isAuthenticated as any, new ListByCategoryController().handle);
 
 //---- ROTAS ATUALIZADAS USUARIOS ----//
 router.post('/user', userController.createUser);

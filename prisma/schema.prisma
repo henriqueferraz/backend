@@ -38,10 +38,10 @@ model Product {
   banner      String
   created_At  DateTime @default(now())
   update_At   DateTime @updatedAt
-  categori_id String   @unique @db.ObjectId
+  category_id String   @db.ObjectId
   Item        Item[]
 
-  category Category @relation(fields: [categori_id], references: [id])
+  category Category @relation(fields: [category_id], references: [id])
 
   @@map(name: "products")
 }
@@ -64,8 +64,8 @@ model Item {
   amount     Int
   created_At DateTime @default(now())
   update_At  DateTime @updatedAt
-  order_id   String   @unique @db.ObjectId
-  product_id String   @unique @db.ObjectId
+  order_id   String   @db.ObjectId
+  product_id String   @db.ObjectId
 
   order   Order   @relation(fields: [order_id], references: [id])
   product Product @relation(fields: [product_id], references: [id])
